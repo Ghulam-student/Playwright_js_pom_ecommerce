@@ -21,4 +21,19 @@ test("complete user flow: login → add to cart → checkout", async ({ page }) 
   await page.waitForTimeout(3000);
   const status = await cart.checkProductInCart("Nexus 6");
   await expect(status).toBe(true);
+
+  //Cart page-Place Order
+  await page.waitForTimeout(3000);
+  await cart.placeOrder(
+    "Testing",
+    "Country Name",
+    "City Name",
+    "00001111",
+    "January",
+    "2040"
+  );
+  await page.waitForTimeout(3000);
+  await expect(cart.puchaseSuccessful).toContain(
+    "Thank you for your purchase!"
+  );
 });
